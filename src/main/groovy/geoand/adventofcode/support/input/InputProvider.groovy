@@ -5,6 +5,7 @@ package geoand.adventofcode.support.input
  */
 interface InputProvider {
 
-    String get(int problem)
+    String getWhole(int problem)
 
+    List<String> getLines(int problem)
 }

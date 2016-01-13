@@ -8,7 +8,7 @@ import geoand.adventofcode.support.input.InputProviderFactory
  */
 
 use(StringCategory) {
-    final def sanitizedInput = InputProviderFactory.inputProvider().get(1).toList().findAll { it in ["(", ")"] }
+    final def sanitizedInput = InputProviderFactory.inputProvider().getWhole(1).toList().findAll { it in ["(", ")"] }
 
     println sanitizedInput.collect(this.&value).sum()
 

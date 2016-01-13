@@ -6,11 +6,20 @@ package geoand.adventofcode.support.input
 class FileInputProvider implements InputProvider {
 
     @Override
-    String get(int problem) {
+    String getWhole(int problem) {
         if(!(1..30).contains(problem)) {
             throw new IllegalArgumentException('The problem number is not correct')
         }
 
-        return this.getClass().getResource("/problem${problem}.in").text
+        return getURL(problem).text
+    }
+
+    @Override
+    List<String> getLines(int problem) {
+        return new File(getURL(problem).file).readLines()
+    }
+
+    private URL getURL(int problem) {
+        this.getClass().getResource("/problem${problem}.in")
     }
 }
