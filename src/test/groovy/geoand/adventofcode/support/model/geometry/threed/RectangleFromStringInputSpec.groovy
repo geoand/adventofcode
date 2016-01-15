@@ -1,4 +1,4 @@
-package geoand.adventofcode.support.model
+package geoand.adventofcode.support.model.geometry.threed
 
 import spock.lang.Specification
 

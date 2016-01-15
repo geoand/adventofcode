@@ -2,7 +2,7 @@ package geoand.adventofcode.problems
 
 import geoand.adventofcode.support.category.ListMethods
 import geoand.adventofcode.support.input.InputProviderFactory
-import geoand.adventofcode.support.model.Coordinate
+import geoand.adventofcode.support.model.geometry.twod.Coordinate
 
 /**
  * Created by gandrianakis on 14/1/2016.

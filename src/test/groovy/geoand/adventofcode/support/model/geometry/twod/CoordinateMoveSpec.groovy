@@ -1,5 +1,6 @@
-package geoand.adventofcode.support.model
+package geoand.adventofcode.support.model.geometry.twod
 
+import geoand.adventofcode.support.model.geometry.twod.Coordinate
 import spock.lang.Specification
 
 /**

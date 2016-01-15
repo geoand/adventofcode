@@ -1,4 +1,4 @@
-package geoand.adventofcode.support.model
+package geoand.adventofcode.support.model.geometry.threed
 
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.Memoized

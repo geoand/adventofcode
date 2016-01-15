@@ -1,7 +1,7 @@
 package geoand.adventofcode.problems
 
 import geoand.adventofcode.support.input.InputProviderFactory
-import geoand.adventofcode.support.model.Rectangle
+import geoand.adventofcode.support.model.geometry.threed.Rectangle
 
 /**
  * Created by gandrianakis on 13/1/2016.
