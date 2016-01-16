@@ -25,4 +25,8 @@ class Registry {
         map[name] = newSubject
         return newSubject
     }
+
+    void clear() {
+        map.clear()
+    }
 }
