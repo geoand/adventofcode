@@ -1,5 +1,6 @@
 package geoand.adventofcode.support.glue.gates
 
+import rx.functions.Func1
 import rx.functions.Func2
 
 /**
@@ -36,13 +37,13 @@ class LineToCombineArgsConverter {
                 return [matcher[1], matcher[2] as int, matcher[3], {a,b -> a >> b} as Func2]
             case ~NOT_REGEX:
                 final def matcher = getMatcher(line, NOT_REGEX)
-                return [matcher[1],  matcher[2], { a, b -> ~a > 0 ?: ~a + 65536} as Func2]
+                return [matcher[1],  matcher[2], { a -> ~a > 0 ?: ~a + 65536} as Func1]
             case ~VALUE_ASSIGN_REGEX:
                 final def matcher = getMatcher(line, VALUE_ASSIGN_REGEX)
                 return [matcher[1] as int, matcher[2]]
             case ~VAR_ASSIGN_REGEX:
                 final def matcher = getMatcher(line, VAR_ASSIGN_REGEX)
-                return [matcher[1], matcher[2], { a, b -> a} as Func2]
+                return [matcher[1], matcher[2], { a -> a} as Func1]
             default:
                 throw new IllegalStateException("The line $line could did not match by any of the predefined regexes")
 

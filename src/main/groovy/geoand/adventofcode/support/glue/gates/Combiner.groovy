@@ -1,6 +1,7 @@
 package geoand.adventofcode.support.glue.gates
 
 import rx.Observable
+import rx.functions.Func1
 import rx.functions.Func2
 import rx.subjects.BehaviorSubject
 
@@ -19,8 +20,8 @@ class Combiner {
         Observable.combineLatest(registry.getOrCreate(firstInputName), registry.getOrCreate(secondInputName), function).subscribe(registry.getOrCreate(resultName))
     }
 
-    void combine(String inputName, String resultName, Func2 function) {
-        Observable.combineLatest(registry.getOrCreate(inputName), BehaviorSubject.create(0), function).subscribe(registry.getOrCreate(resultName))
+    void combine(String inputName, String resultName, Func1 function) {
+        registry.getOrCreate(inputName).map(function).subscribe(registry.getOrCreate(resultName))
     }
 
     void combine(String inputName, int staticInput, String resultName, Func2 function) {
