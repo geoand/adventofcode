@@ -19,4 +19,14 @@ class StringMethods {
         }
     }
 
+    static int encodedSize(String self) {
+        if(!self) {
+            return 0
+        }
+
+        use(ListMethods) {
+            self.replace('\\', '\\\\').replace('"', "\\\"").size() + 2
+        }
+    }
+
 }

@@ -10,5 +10,6 @@ import geoand.adventofcode.support.input.InputProviderFactory
 final List<String> lines = InputProviderFactory.inputProvider().getLines(8)
 
 use(StringMethods) {
-    println lines.collect {it.size() - it.saveSize()}.sum()
+//    println lines.collect {it.size() - it.saveSize()}.sum()
+    println lines.collect {it.encodedSize() - it.size()}.sum()
 }
