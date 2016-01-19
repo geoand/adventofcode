@@ -1,7 +1,7 @@
 ## Purpose
 
 Provide solutions to the [Advent Of Code problems](http://adventofcode.com/) problems
-using the Groovy Programming Language and a programming style that attempts to be functional
+using the Groovy Programming Language and a programming style that attempts to be as functional and idiomatic to Groovy as possible
 
 ## Prerequisites
 
