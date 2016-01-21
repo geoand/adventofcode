@@ -1,9 +1,15 @@
 ## Purpose
 
-Provide solutions to the [Advent Of Code problems](http://adventofcode.com/) problems
-using the Groovy Programming Language and a programming style that attempts to be as functional and idiomatic to Groovy as possible
+### Main
+Provide solutions to the [Advent Of Code problems](http://adventofcode.com/) problems using the Groovy Programming Language
 
-Note that not much brainpower has gone into optimizing the execution time of the various solutions. As a result some solutions might take a fair amount time to run (for example problem 10)
+### Secondary
+ - Use a little mutable state as possible
+ - Use some idiomatic Groovy features
+ - Optimize for reusability, readability, testability
+
+### Disclaimer
+The solutions provided here have not been excessively optimized for runtime performance. There for some solutions might take a few seconds to run  
 
 ## Prerequisites
 
