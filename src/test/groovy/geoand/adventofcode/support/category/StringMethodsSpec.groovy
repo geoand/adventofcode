@@ -29,4 +29,20 @@ class StringMethodsSpec extends Specification {
             /"q\"\"lfdentjgd\\"/ | 13
             /"nxzo\"hf\xp"/ | 10
     }
+
+    @Unroll
+    def "charIncrement"(String input, String expectedOutput) {
+        expect:
+            StringMethods.charIncrement(input) == expectedOutput
+
+        where:
+            input | expectedOutput
+            "a" | "b"
+            "z" | "aa"
+            "za" | "zb"
+            "zz" | "aaa"
+            "aaa" | "aab"
+            "abz" | "aca"
+            "abcdezzz" | "abcdfaaa"
+    }
 }
