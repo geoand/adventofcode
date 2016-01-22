@@ -4,8 +4,8 @@
 Provide solutions to the [Advent Of Code problems](http://adventofcode.com/) problems using the Groovy Programming Language
 
 ### Secondary
- - Use a little mutable state as possible
- - Use some idiomatic Groovy features
+ - Use as little mutable state as possible
+ - Use idiomatic Groovy features
  - Optimize for reusability, readability, testability
 
 ### Disclaimer
