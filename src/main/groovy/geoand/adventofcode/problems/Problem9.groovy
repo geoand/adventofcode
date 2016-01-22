@@ -12,7 +12,7 @@ import org.jgrapht.graph.SimpleWeightedGraph
 
 final List<String> lines = InputProviderFactory.inputProvider().getLines(9)
 
-final List<Connection> connections = lines.collect {Connection.fromInput(it)}
+final List<Connection> connections = lines.collect {Connection.fromProblem9Input(it)}
 
 
 use(JGraphTWeightedGraphMethods) {

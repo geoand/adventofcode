@@ -17,9 +17,8 @@ class Connection {
         this.weight = weight
     }
 
-    static Connection fromInput(String input) {
-        final String regex = /(\w+)\s+to\s+(\w+)\s+=\s+(\d+)/
-        final Matcher matcher = (input =~ regex)
+    static Connection fromProblem9Input(String input) {
+        final Matcher matcher = (input =~ /(\w+)\s+to\s+(\w+)\s+=\s+(\d+)/)
         if(matcher.size() != 1) {
             throw new IllegalArgumentException("input '${input}' was not is the expected format")
         }
@@ -29,13 +28,20 @@ class Connection {
         return new Connection(match[1] as String, match[2] as String, match[3] as double)
     }
 
-    static List<Connection> fromInputWithReverse(String input) {
-        final Connection forward = fromInput(input)
-        return [forward, forward.reverse()]
+
+    static Connection fromProblem13Input(String input) {
+        final Matcher matcher = (input =~ /(\w+)\s+would\s+(gain|lose)\s+(\d+)\s+happiness\s+units\s+by\s+sitting\s+next\s+to\s+(\w+)./)
+        if(matcher.size() != 1) {
+            throw new IllegalArgumentException("input '${input}' was not is the expected format")
+        }
+
+        final def match = matcher[0]
+
+        return new Connection(match[1] as String, match[4] as String, ((match[3] as double) * (match[2] == 'gain' ? 1 : -1)))
     }
 
-    Connection reverse() {
-        return new Connection(to, from, weight)
+    static Connection zeroWeight(String from, String to) {
+        return new Connection(from, to, 0)
     }
 }
 

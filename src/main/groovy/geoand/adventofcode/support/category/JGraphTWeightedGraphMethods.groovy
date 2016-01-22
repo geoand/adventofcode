@@ -8,15 +8,42 @@ import org.jgrapht.WeightedGraph
  */
 class JGraphTWeightedGraphMethods {
 
+    private static class AddEdgeResult<E> {
+
+        final E edge
+        final boolean newEdge
+
+        AddEdgeResult(E edge, boolean newEdge) {
+            this.edge = edge
+            this.newEdge = newEdge
+        }
+    }
+
     @CompileStatic
     static <V, E> E addEdge(WeightedGraph<V, E> self, V sourceVertex, V targetVertex, double weight) {
+        addEdge(self, sourceVertex, targetVertex, weight, {a, b -> b})
+    }
+
+    @CompileStatic
+    static <V, E> E addEdge(WeightedGraph<V, E> self, V sourceVertex, V targetVertex, double weight, Closure<Double> weightCombine) {
         self.addVertex(sourceVertex)
         self.addVertex(targetVertex)
 
-        final def result = self.addEdge(sourceVertex, targetVertex)
-        self.setEdgeWeight(result, weight)
+        final AddEdgeResult<E> addEdgeResult = addEdgeSafe(self, sourceVertex, targetVertex)
+        final double previousEdgeWeight = addEdgeResult.newEdge ? 0 : self.getEdgeWeight(addEdgeResult.edge)
+        self.setEdgeWeight(addEdgeResult.edge, weightCombine.call(previousEdgeWeight, weight))
 
-        return result
+        return addEdgeResult.edge
+    }
+
+    @CompileStatic
+    private static <V, E> AddEdgeResult<E> addEdgeSafe(WeightedGraph<V, E> self, V sourceVertex, V targetVertex) {
+        final def addResult = self.addEdge(sourceVertex, targetVertex)
+        if(addResult) {
+            return new AddEdgeResult<E>(addResult, true)
+        }
+
+        return new AddEdgeResult<E>(self.getEdge(sourceVertex, targetVertex), false)
     }
 
     @CompileStatic
