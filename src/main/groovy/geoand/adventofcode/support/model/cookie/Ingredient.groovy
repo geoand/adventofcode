@@ -1,4 +1,4 @@
-package geoand.adventofcode.support.model.ingredient
+package geoand.adventofcode.support.model.cookie
 
 import groovy.transform.Immutable
 import groovy.transform.ToString

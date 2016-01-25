@@ -1,6 +1,6 @@
 package geoand.adventofcode.support.glue.cookie;
 
-import geoand.adventofcode.support.model.ingredient.Ingredient;
+import geoand.adventofcode.support.model.cookie.Ingredient;
 import org.paukov.combinatorics.Factory;
 import org.paukov.combinatorics.Generator;
 import org.paukov.combinatorics.ICombinatoricsVector;

@@ -1,4 +1,4 @@
-package geoand.adventofcode.support.model.ingredient
+package geoand.adventofcode.support.model.cookie
 
 import spock.lang.Specification
 
@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat
  */
 class IngredientIntValueMapNoCaloriesSpec extends Specification {
 
-    def "only int fields added and the negative fields transformed to 0"() {
+    def "only int fields added"() {
         given:
             final def ingredient = new Ingredient("test", 1, 2, 0, -1, 10)
 
@@ -21,6 +21,6 @@ class IngredientIntValueMapNoCaloriesSpec extends Specification {
             map.capacity == 1
             map.durability == 2
             map.flavor == 0
-            map.texture == 0
+            map.texture == -1
     }
 }

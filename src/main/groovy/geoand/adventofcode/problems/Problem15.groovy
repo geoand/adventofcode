@@ -3,7 +3,7 @@ package geoand.adventofcode.problems
 import geoand.adventofcode.support.glue.cookie.CalculatorFactory
 import geoand.adventofcode.support.glue.cookie.OptimalCookieFinder
 import geoand.adventofcode.support.input.InputProviderFactory
-import geoand.adventofcode.support.model.ingredient.Ingredient
+import geoand.adventofcode.support.model.cookie.Ingredient
 
 /**
  * Created by George Andrianakis on 24/1/2016.

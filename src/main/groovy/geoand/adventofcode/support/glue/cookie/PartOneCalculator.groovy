@@ -1,6 +1,6 @@
 package geoand.adventofcode.support.glue.cookie
 
-import geoand.adventofcode.support.model.ingredient.Ingredient
+import geoand.adventofcode.support.model.cookie.Ingredient
 
 /**
  * Created by gandrianakis on 25/1/2016.

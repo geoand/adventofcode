@@ -1,4 +1,4 @@
-package geoand.adventofcode.support.model.ingredient
+package geoand.adventofcode.support.model.cookie
 
 import spock.lang.Specification
 
