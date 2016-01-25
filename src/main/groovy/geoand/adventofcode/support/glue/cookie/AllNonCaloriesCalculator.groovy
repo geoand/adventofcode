@@ -5,14 +5,14 @@ import geoand.adventofcode.support.model.cookie.Ingredient
 /**
  * Created by gandrianakis on 25/1/2016.
  */
-class PartOneCalculator implements Calculator {
+class AllNonCaloriesCalculator implements Calculator {
 
     final Set<Ingredient> ingredientsSet
 
-    private final Map<String, Map<String, Integer>> ingredientPropertyToNameToValueMap
-    private final Set<String> ingredientProperties
+    protected final Map<String, Map<String, Integer>> ingredientPropertyToNameToValueMap
+    protected final Set<String> ingredientProperties
 
-    private PartOneCalculator(Set<Ingredient> ingredients) {
+    protected AllNonCaloriesCalculator(Set<Ingredient> ingredients) {
 
         this.ingredientsSet = ingredients
 
@@ -29,7 +29,7 @@ class PartOneCalculator implements Calculator {
     }
 
     static of(Collection<Ingredient> ingredients) {
-        new PartOneCalculator(ingredients as Set)
+        new AllNonCaloriesCalculator(ingredients as Set)
     }
 
     @Override

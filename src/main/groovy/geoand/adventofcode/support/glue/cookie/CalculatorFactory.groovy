@@ -8,6 +8,10 @@ import geoand.adventofcode.support.model.cookie.Ingredient
 abstract class CalculatorFactory {
 
     static partOne(Collection<Ingredient> ingredients) {
-        return PartOneCalculator.of(ingredients)
+        return AllNonCaloriesCalculator.of(ingredients)
+    }
+
+    static partTwo(Collection<Ingredient> ingredients, Integer matchingCalories) {
+        return MatchingCaloriesCalculator.of(ingredients, matchingCalories)
     }
 }

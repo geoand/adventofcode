@@ -17,6 +17,8 @@ List<Ingredient> ingredients = lines.collect {Ingredient.fromInput(it)}
  * The problem is solvable by brute force since the number of combinations is C(100+4-1,100) = 176851
  */
 
-println ((new OptimalCookieFinder(CalculatorFactory.partOne(ingredients), 100)).highestScore())
+//println ((new OptimalCookieFinder(CalculatorFactory.partOne(ingredients), 100)).highestScore())
+
+println ((new OptimalCookieFinder(CalculatorFactory.partTwo(ingredients, 500), 100)).highestScore())
 
 
