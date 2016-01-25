@@ -11,7 +11,7 @@ import geoand.adventofcode.support.model.cookie.Ingredient
 
 final List<String> lines = InputProviderFactory.inputProvider().getLines(15)
 
-List<Ingredient> ingredients = lines.collect {Ingredient.fromInput(it)}
+final List<Ingredient> ingredients = lines.collect {Ingredient.fromInput(it)}
 
 /**
  * The problem is solvable by brute force since the number of combinations is C(100+4-1,100) = 176851
