@@ -40,6 +40,6 @@ public class OptimalCookieFinder {
         ICombinatoricsVector<Ingredient> initialVector = Factory.createVector(calculator.getIngredients());
         Generator<Ingredient> gen = Factory.createMultiCombinationGenerator(initialVector, size);
 
-        return StreamSupport.stream(gen.spliterator(), false).map(ICombinatoricsVector::getVector).parallel();
+        return StreamSupport.stream(gen.spliterator(), false).parallel().map(ICombinatoricsVector::getVector);
     }
 }
