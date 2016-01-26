@@ -37,7 +37,7 @@ println auntStream.findFirst().get().id
 @CompileStatic
 class AuntPredicate implements Predicate<Aunt> {
     
-    final MapKeyValuePredicate<String, Integer> delegate
+    final Predicate<Map<String, Integer>> delegate
 
     AuntPredicate(String key, Integer value) {
         this.delegate = new MapKeyValuePredicate<String, Integer>(key, value, false)
