@@ -24,6 +24,8 @@ use(JGraphTWeightedGraphMethods) {
 
     /**
      * This is a super naive implementation that will not scale at all!!!
+     * It works for this problem because the problem is brute-force able
+     * due to the small input size
      */
 
     println calculate(partOneGraph)

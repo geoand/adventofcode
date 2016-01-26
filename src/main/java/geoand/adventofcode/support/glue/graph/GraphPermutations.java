@@ -5,6 +5,7 @@ import geoand.adventofcode.support.group.Permutations;
 import org.jgrapht.WeightedGraph;
 import org.jgrapht.graph.DefaultWeightedEdge;
 
+import java.util.DoubleSummaryStatistics;
 import java.util.List;
 import java.util.function.Function;
 
@@ -23,5 +24,12 @@ public abstract class GraphPermutations {
                 .map(permutation -> JGraphTWeightedGraphMethods.getWeightOfWholePath(graph, permutation))
                 .max(Double::compare)
                 .get();
+    }
+
+    public static <T> DoubleSummaryStatistics summaryStatistics(WeightedGraph<T, DefaultWeightedEdge> graph) {
+        return Permutations.of(graph.vertexSet()).parallel()
+                .map(permutation -> JGraphTWeightedGraphMethods.getWeightOfWholePath(graph, permutation))
+                .mapToDouble(Double::valueOf)
+                .summaryStatistics();
     }
 }
