@@ -2,7 +2,9 @@ package geoand.adventofcode.problems
 
 import geoand.adventofcode.support.input.InputProviderFactory
 import geoand.adventofcode.support.model.aunt.Aunt
-import geoand.adventofcode.support.predicates.MapKeyValuePredicate
+import geoand.adventofcode.support.predicates.MapKeyValueEqualsPredicate
+import geoand.adventofcode.support.predicates.MapKeyValueGreaterThanPredicate
+import geoand.adventofcode.support.predicates.MapKeyValueLessThanPredicate
 import groovy.transform.CompileStatic
 
 import java.util.function.Predicate
@@ -13,34 +15,40 @@ import java.util.stream.Stream
  */
 
 final List<String> lines = InputProviderFactory.inputProvider().getLines(16)
-
 final List<Aunt> aunts = lines.collect { Aunt.fromInput(it) }
-final List<AuntPredicate> predicates = [
-        new AuntPredicate('children', 3),
-        new AuntPredicate('cats', 7),
-        new AuntPredicate('samoyeds', 2),
-        new AuntPredicate('pomeranians', 3),
-        new AuntPredicate('akitas', 0),
-        new AuntPredicate('vizslas', 0),
-        new AuntPredicate('goldfish', 5),
-        new AuntPredicate('trees', 3),
-        new AuntPredicate('cars', 2),
-        new AuntPredicate('perfumes', 1),
+
+final List<List<Object>> specs = [
+        ['children', 3],
+        ['cats', 7],
+        ['samoyeds', 2],
+        ['pomeranians', 3],
+        ['akitas', 0],
+        ['vizslas', 0],
+        ['goldfish', 5],
+        ['trees', 3],
+        ['cars', 2],
+        ['perfumes', 1],
 ]
 
-//construct a stream using the predicates above since the stream will efficiently perform each stage filtering
-//Could also have used predicate.and() to construct a single final predicate
-final Stream<Aunt> auntStream = predicates.inject(aunts.stream()) { Stream<Aunt> stream, AuntPredicate predicate -> stream.filter(predicate)}
-println auntStream.findFirst().get().id
+println find(aunts, specs.collect {new AuntPartOnePredicate(it[0], it[1])})
+println find(aunts, specs.collect {new AuntPartTwoPredicate(it[0], it[1])})
 
+/**
+ * construct a stream using the predicates above since the stream will efficiently perform each stage filtering
+ * Could also have used predicate.and() to construct a single final predicate
+ */
+private String find(Collection<Aunt> aunts, Collection<Predicate<Aunt>> predicates) {
+    final Stream<Aunt> auntStream = predicates.inject(aunts.stream()) { Stream<Aunt> stream, Predicate<Aunt> predicate -> stream.filter(predicate) }
+    return auntStream.findFirst().get().id
+}
 
 @CompileStatic
-class AuntPredicate implements Predicate<Aunt> {
+class AuntPartOnePredicate implements Predicate<Aunt> {
     
     final Predicate<Map<String, Integer>> delegate
 
-    AuntPredicate(String key, Integer value) {
-        this.delegate = new MapKeyValuePredicate<String, Integer>(key, value, false)
+    AuntPartOnePredicate(String key, Integer value) {
+        this.delegate = new MapKeyValueEqualsPredicate<String, Integer>(key, value, false)
     }
 
     @Override
@@ -48,4 +56,25 @@ class AuntPredicate implements Predicate<Aunt> {
         return delegate.test(aunt.attributes)
     }
 }
+
+class AuntPartTwoPredicate implements Predicate<Aunt> {
+
+    private static final Map<String, Class> nameToPredicateClassMap = [
+            'cats'       : MapKeyValueGreaterThanPredicate, 'trees': MapKeyValueGreaterThanPredicate,
+            'pomeranians': MapKeyValueLessThanPredicate, 'goldfish': MapKeyValueLessThanPredicate
+    ]
+
+    final Predicate<Map<String, Integer>> delegate
+
+    AuntPartTwoPredicate(String key, Integer value) {
+        this.delegate = nameToPredicateClassMap.getOrDefault(key, MapKeyValueEqualsPredicate).metaClass.&invokeConstructor(key, value, false)
+    }
+
+    @CompileStatic
+    @Override
+    boolean test(Aunt aunt) {
+        return delegate.test(aunt.attributes)
+    }
+}
+
 

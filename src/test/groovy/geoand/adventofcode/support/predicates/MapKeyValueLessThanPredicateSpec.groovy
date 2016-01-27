@@ -6,12 +6,12 @@ import spock.lang.Unroll
 /**
  * Created by gandrianakis on 26/1/2016.
  */
-class MapKeyValuePredicateSpec extends Specification {
+class MapKeyValueLessThanPredicateSpec extends Specification {
 
     @Unroll
     def "fails on missing key"(Map map, boolean expected) {
         given:
-            final MapKeyValuePredicate<String, Integer> predicate = new MapKeyValuePredicate<>('key1', 1, true)
+            final MapKeyValueLessThanPredicate<String, Integer> predicate = new MapKeyValueLessThanPredicate<>('key1', 1, true)
 
         expect:
             predicate.test(map) == expected
@@ -21,15 +21,16 @@ class MapKeyValuePredicateSpec extends Specification {
             [:] | false
             [key1: 2] | false
             [key2: 2] | false
-            [key1: 0, key2: 2] | false
-            [key1: 1] | true
-            [key1: 1, key2: 2] | true
+            [key1: 0, key2: 2] | true
+            [key1: 1] | false
+            [key1: 1, key2: 2] | false
+            [key1: 2, key2: 2] | false
     }
 
     @Unroll
     def "passes on missing key"(Map map, boolean expected) {
         given:
-            final MapKeyValuePredicate<String, Integer> predicate = new MapKeyValuePredicate<>('key1', 1, false)
+            final MapKeyValueLessThanPredicate<String, Integer> predicate = new MapKeyValueLessThanPredicate<>('key1', 1, false)
 
         expect:
             predicate.test(map) == expected
@@ -39,8 +40,9 @@ class MapKeyValuePredicateSpec extends Specification {
             [:] | true
             [key1: 2] | false
             [key2: 2] | true
-            [key1: 0, key2: 2] | false
-            [key1: 1] | true
-            [key1: 1, key2: 2] | true
+            [key1: 0, key2: 2] | true
+            [key1: 1] | false
+            [key1: 1, key2: 2] | false
+            [key1: 2, key2: 2] | false
     }
 }
