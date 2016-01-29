@@ -64,4 +64,16 @@ class ListMethods {
 
         return []
     }
+
+    @CompileStatic
+    public static <S> List<List<S>> indexCollate(List<S> self, int index) {
+        if(index < 0) {
+            return [[], self]
+        }
+        if(index >= self.size()) {
+            return [self, []]
+        }
+
+        return [self.take(index), self.drop(index+1)]
+    }
 }
