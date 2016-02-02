@@ -1,24 +1,81 @@
 package geoand.adventofcode.problems
+
+import geoand.adventofcode.support.input.InputProviderFactory
+
+import java.util.function.Predicate
+
 /**
  * Created by George Andrianakis on 28/1/2016.
  */
 
-final input = 'HOH'
+final String SPLIT = '=>'
 
-final Map<String, List<String>> replacements = [
-        H: ['OH', 'HO'],
-        O: ['HH']
-]
+final List<String> lines = InputProviderFactory.inputProvider().getLines(19).findAll{it}
 
-//previous, next, results
-final List<String> finalResult = input.inject(['', input.drop(1), []]) {running, character ->
-    final String prefix = running[0]
-    final String postfix = running[1]
-    final List<String> runningResults = running[2]
+final Predicate<String> isReplacementLinePredicate = new IsReplacementLinePredicate(SPLIT)
 
-    final List<String> current = replacements.getOrDefault(character, [character]).collect {replacement -> prefix + replacement + postfix}
+final List<String> replacementLines = lines.findAll(isReplacementLinePredicate.&test)
+final String stringToReplace = lines.find(isReplacementLinePredicate.negate().&test)
 
-    return [prefix + character, postfix.drop(1), runningResults + current]
-}[2].unique()
+final Map<String, List<String>> replacements = replacementLines.inject([:] as Map<String, List<String>>) { Map<String, List<String>> currentMap, String currentLine ->
+    final String[] parts = currentLine.split(SPLIT)
+    final String toReplace = parts[0].trim()
+    if(!parts || parts.size() != 2) {
+        throw new IllegalArgumentException("Line $currentLine is not a replacement line")
+    }
 
-println finalResult
+    currentMap[toReplace] = currentMap.getOrDefault(toReplace, []) + parts[1].trim()
+
+    return currentMap
+}
+
+println (partOneResults(stringToReplace, replacements).sort().size())
+
+/**
+ * Collect all the strings that are the result of each replacement and return a unique list
+ */
+private List<String> partOneResults(String stringToReplace, Map<String, List<String>> replacements) {
+    replacements.keySet().collect{it.size()}.unique().collectMany {partOneResults(stringToReplace, replacements, it)}.unique()
+}
+
+/**
+ * Returns all the unique replacements for the specified number of chars to check each time
+ */
+private List<String> partOneResults(String stringToReplace, Map<String, List<String>> replacements, int numberOfChars) {
+    return stringToReplace.toList().collate(numberOfChars, 1, false).inject(new InjectResult('', stringToReplace.drop(numberOfChars).toString(), [])) { InjectResult running, List<String> partToReplaceList ->
+        final String partToReplace = partToReplaceList.join('')
+        final String prefix = running.prefix
+        final String suffix = running.suffix
+
+        final List<String> existingReplacements = running.generated
+
+        final List<String> newReplacements = replacements.getOrDefault(partToReplace, [partToReplace]).collect { replacement -> prefix + replacement + suffix }
+        return new InjectResult(prefix + partToReplace[0], suffix.drop(1).toString(), existingReplacements + newReplacements)
+    }.generated.unique() - [stringToReplace]
+}
+
+class InjectResult {
+    final String prefix
+    final String suffix
+    final List<String> generated
+
+    InjectResult(String prefix, String suffix, List<String> generated) {
+        this.prefix = prefix
+        this.suffix = suffix
+        this.generated = generated
+    }
+}
+
+class IsReplacementLinePredicate implements Predicate<String> {
+
+    final String split
+
+    IsReplacementLinePredicate(String split) {
+        this.split = split
+    }
+
+    @Override
+    boolean test(String s) {
+        return s.contains(split)
+    }
+}
