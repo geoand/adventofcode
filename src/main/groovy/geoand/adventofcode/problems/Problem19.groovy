@@ -1,6 +1,7 @@
 package geoand.adventofcode.problems
 
 import geoand.adventofcode.support.input.InputProviderFactory
+import groovy.transform.TailRecursive
 
 import java.util.function.Predicate
 
@@ -17,19 +18,34 @@ final Predicate<String> isReplacementLinePredicate = new IsReplacementLinePredic
 final List<String> replacementLines = lines.findAll(isReplacementLinePredicate.&test)
 final String stringToReplace = lines.find(isReplacementLinePredicate.negate().&test)
 
-final Map<String, List<String>> replacements = replacementLines.inject([:] as Map<String, List<String>>) { Map<String, List<String>> currentMap, String currentLine ->
-    final String[] parts = currentLine.split(SPLIT)
-    final String toReplace = parts[0].trim()
-    if(!parts || parts.size() != 2) {
-        throw new IllegalArgumentException("Line $currentLine is not a replacement line")
-    }
-
-    currentMap[toReplace] = currentMap.getOrDefault(toReplace, []) + parts[1].trim()
-
-    return currentMap
-}
+final Map<String, List<String>> replacements = getReplacementMap(replacementLines, SPLIT, true)
 
 println (partOneResults(stringToReplace, replacements).sort().size())
+
+final Map<String, String> reverseReplacements = getReplacementMap(replacementLines, SPLIT, false).collectEntries {key, value -> [(key):value[0]]}
+
+println(countSteps(stringToReplace, reverseReplacements, 0))
+
+
+private Map<String, List<String>> getReplacementMap(List<String> replacementLines, String SPLIT, boolean straight) {
+    replacementLines.inject([:] as Map<String, List<String>>) { Map<String, List<String>> currentMap, String currentLine ->
+        final String[] parts = currentLine.split(SPLIT)
+        if (!parts || parts.size() != 2) {
+            throw new IllegalArgumentException("Line $currentLine is not a replacement line")
+        }
+
+        final int keyIndex = straight ? 0 : 1
+        final int valueIndex = (keyIndex + 1) % 2
+
+        final String key = parts[keyIndex].trim()
+        final String value = parts[valueIndex].trim()
+
+        currentMap[key] = currentMap.getOrDefault(key, []) + value
+
+        return currentMap
+    }
+}
+
 
 /**
  * Collect all the strings that are the result of each replacement and return a unique list
@@ -52,6 +68,26 @@ private List<String> partOneResults(String stringToReplace, Map<String, List<Str
         final List<String> newReplacements = replacements.getOrDefault(partToReplace, [partToReplace]).collect { replacement -> prefix + replacement + suffix }
         return new InjectResult(prefix + partToReplace[0], suffix.drop(1).toString(), existingReplacements + newReplacements)
     }.generated.unique() - [stringToReplace]
+}
+
+@TailRecursive
+private int countSteps(String input, Map<String, String> replacements, Integer initCount) {
+
+
+    final StringInteger roundResult = replacements.inject(new StringInteger(input, initCount)) { StringInteger current, String key, String value ->
+        if(current.string.contains(key)) {
+            return new StringInteger(current.string.replaceFirst(key, value), current.integer + 1)
+        }
+
+        return current
+    }
+
+    if(roundResult.string == 'e') {
+        return roundResult.integer
+    }
+    else {
+        return countSteps(roundResult.string, replacements, roundResult.integer)
+    }
 }
 
 class InjectResult {
@@ -77,5 +113,15 @@ class IsReplacementLinePredicate implements Predicate<String> {
     @Override
     boolean test(String s) {
         return s.contains(split)
+    }
+}
+
+class StringInteger {
+    final String string
+    final Integer integer
+
+    StringInteger(String string, Integer integer) {
+        this.string = string
+        this.integer = integer
     }
 }
