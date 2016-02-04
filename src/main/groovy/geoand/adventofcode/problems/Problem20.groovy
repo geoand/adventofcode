@@ -1,5 +1,6 @@
 package geoand.adventofcode.problems
 
+import geoand.adventofcode.support.glue.presents.PartTwoSum
 import geoand.adventofcode.support.input.InputProviderFactory
 import geoand.adventofcode.support.math.FactorSum
 
@@ -19,3 +20,8 @@ final Integer input = (InputProviderFactory.inputProvider().getWhole(20) as Inte
 final Integer inputIgnoringMultiplication = input / 10
 
 println ((2..inputIgnoringMultiplication).find {FactorSum.perform(it) >= inputIgnoringMultiplication})
+
+
+println ((2..input).find{ candidate ->
+    PartTwoSum.calculate(candidate) >= input
+})
