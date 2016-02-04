@@ -26,7 +26,7 @@ println houseCount(houseCoordinates(santaInput) + houseCoordinates(roboSantaInpu
 
 List<Coordinate> houseCoordinates(List<String> input) {
     return input.inject([Coordinate.start()]) {list, character ->
-        list + [list[-1].move(character)]
+        list + [list.last().move(character)]
     }
 }
 
