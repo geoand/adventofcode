@@ -40,7 +40,7 @@ final int PLAYER_HP = 100
 
 final List<String> lines = InputProviderFactory.inputProvider().getLines(21)
 
-final Player BOSS = new Player(*lines.collect {extractInt(it)})
+final Player BOSS = new Player(*lines.collect (this.&extractInt))
 
 final List<Item> weaponsArmorCombinations = combinations(weapons, armor + nonExistent())
 final List<Item> ringCombinations = ringCombinations(rings)
