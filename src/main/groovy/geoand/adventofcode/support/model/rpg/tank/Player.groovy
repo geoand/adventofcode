@@ -1,4 +1,4 @@
-package geoand.adventofcode.support.model.rpg
+package geoand.adventofcode.support.model.rpg.tank
 
 /**
  * Created by gandrianakis on 4/2/2016.

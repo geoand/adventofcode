@@ -2,10 +2,10 @@ package geoand.adventofcode.problems
 
 import com.google.common.collect.Sets
 import geoand.adventofcode.support.input.InputProviderFactory
-import geoand.adventofcode.support.model.rpg.Item
-import geoand.adventofcode.support.model.rpg.Player
+import geoand.adventofcode.support.model.rpg.tank.Item
+import geoand.adventofcode.support.model.rpg.tank.Player
 
-import static geoand.adventofcode.support.model.rpg.Item.*
+import static Item.*
 
 /**
  * Created by gandrianakis on 4/2/2016.

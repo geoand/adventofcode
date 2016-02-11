@@ -1,4 +1,4 @@
-package geoand.adventofcode.support.model.rpg
+package geoand.adventofcode.support.model.rpg.tank
 
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
