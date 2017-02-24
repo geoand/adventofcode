@@ -1,7 +1,7 @@
 ## Purpose
 
 ### Main
-Provide solutions to the [Advent Of Code problems](http://adventofcode.com/) problems using the Groovy Programming Language
+Provide solutions to the [Advent Of Code problems](http://adventofcode.com/2015) problems (2015 edition) using the Groovy Programming Language
 
 ### Secondary
  - Use as little mutable state as possible
